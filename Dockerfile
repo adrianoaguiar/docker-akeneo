@@ -1,4 +1,4 @@
-# Akeneo PIM
+# Akeneo
 #
 # VERSION 0.0.1
 
@@ -17,23 +17,28 @@ RUN apt-get update \
  php5-mcrypt \
  php5-apcu \
  php5-mongo \
+ curl \
 && php5enmod mcrypt \
-&& a2enmod rewrite
+&& a2enmod rewrite \
+&& rm -r /var/lib/apt/lists/*
 
 # Setting up PHP configuration
-RUN sed -i -e "s/^memory_limit =.*/memory_limit = 512M/" /etc/php5/apache2/php.ini \
-&& sed -i -e "s/;date.timezone =/date.timezone = Europe\/Paris/" /etc/php5/apache2/php.ini \
-&& sed -i -e "s/^memory_limit =.*/memory_limit = 768M/" /etc/php5/cli/php.ini \
-&& sed -i -e "s/;date.timezone =/date.timezone = Europe\/Paris/" /etc/php5/cli/php.ini
+RUN sed -i 's/memory_limit = 128M/memory_limit = 512M/' /etc/php5/apache2/php.ini \
+&& sed -i 's/;date.timezone =/date.timezone = Europe\/Paris/' /etc/php5/apache2/php.ini \
+&& sed -i 's/memory_limit = -1/memory_limit = 768M/' /etc/php5/cli/php.ini \
+&& sed -i 's/;date.timezone =/date.timezone = Europe\/Paris/' /etc/php5/cli/php.ini
 
 # Installing Akeneo PIM
-ADD pim-community-standard-v1.3-latest-icecat.tar.gz /var/www
-RUN cd /var/www/pim-community-standard-v1.3.2-icecat \
-&& php app/console cache:clear --env=prod \
-&& php app/console pim:install --env=prod
+COPY akeneo-pim.local.conf /etc/apache2/sites-available/
+RUN curl -SL http://www.akeneo.com/pim-community-standard-v1.3-latest-icecat.tar.gz \
+ | tar -zxC /var/www \
+&& a2ensite akeneo-pim.local \
+&& a2dissite 000-default
 
-VOLUME /var/www
+# Initializing Akeneo
+COPY init-akeneo.sh /init-akeneo.sh
+RUN chmod +x init-akeneo.sh
 
 EXPOSE 80
-
-CMD apache2ctl -D FOREGROUND
+VOLUME ["/var/www", "/var/log/apache2"]
+ENTRYPOINT ["/init-akeneo.sh"]
