@@ -21,5 +21,5 @@ Run a container:
      
     docker run -e LINK_ALIAS=mysql \
      --link mysql:mysql \
-      -p 80:80 \
-      -d akeneo
+     -p 80:80 \
+     -d akeneo
