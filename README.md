@@ -19,7 +19,8 @@ Run a container:
      -e MYSQL_DATABASE=akeneo_pim \
      -d mysql
      
-    docker run -e LINK_ALIAS=mysql \
+    docker run --name akeneo \
+     -e LINK_ALIAS=mysql \
      --link mysql:mysql \
      -p 80:80 \
      -d akeneo
