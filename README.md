@@ -25,6 +25,8 @@ Run containers:
      -p 80:80 \
      -d akeneo
 
-Show the installation process:
+Show the Akeneo installation process:
 
     docker logs --follow akeneo
+
+Go to http://localhost/ and log in with admin/admin.
