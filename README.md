@@ -10,7 +10,7 @@ Build the image using:
 
     docker build -t akeneo .
 
-Run a container:
+Run containers:
 
     docker run --name mysql \
      -e MYSQL_ROOT_PASSWORD=root \
@@ -24,3 +24,7 @@ Run a container:
      --link mysql:mysql \
      -p 80:80 \
      -d akeneo
+
+Show the installation process:
+
+    docker logs --follow akeneo
