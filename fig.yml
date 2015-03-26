@@ -1,5 +1,5 @@
 akeneo:
-  build: .
+  image: varrocen/docker-akeneo
   environment:
     LINK_ALIAS: mysql
   links:
