@@ -1,5 +1,4 @@
 # Akeneo
-
 FROM ubuntu:trusty
 MAINTAINER Vincent ARROCENA <varrocen@gmail.com>
 
