@@ -1,6 +1,4 @@
 # Akeneo
-#
-# VERSION 0.0.1
 
 FROM ubuntu:trusty
 MAINTAINER Vincent ARROCENA <varrocen@gmail.com>
