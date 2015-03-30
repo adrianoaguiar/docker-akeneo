@@ -1,12 +1,12 @@
 akeneo:
   image: varrocen/docker-akeneo
   environment:
-    LINK_ALIAS: mysql
+    LINK_ALIAS: akeneo-mysql
   links:
-   - mysql
+   - akeneo-mysql
   ports:
    - "80:80"
-mysql:
+akeneo-mysql:
   image: mysql:5.6
   environment:
     MYSQL_ROOT_PASSWORD: root
